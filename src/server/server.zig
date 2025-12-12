@@ -219,14 +219,15 @@ pub const Server = struct {
     /// Handle an incoming message
     fn handleMessage(self: *Self, data: []const u8) !void {
         // Parse the JSON-RPC message
-        const message = jsonrpc.parseMessage(self.allocator, data) catch {
+        const parsed_message = jsonrpc.parseMessage(self.allocator, data) catch {
             // Send parse error response
             const error_response = jsonrpc.createParseError(null);
             try self.sendResponse(.{ .error_response = error_response });
             return;
         };
+        defer parsed_message.deinit();
 
-        switch (message) {
+        switch (parsed_message.message) {
             .request => |req| try self.handleRequest(req),
             .notification => |notif| try self.handleNotification(notif),
             .response => |resp| self.handleResponse(resp),

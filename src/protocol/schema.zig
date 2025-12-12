@@ -349,7 +349,10 @@ test "SchemaBuilder" {
 }
 
 test "InputSchemaBuilder" {
-    const allocator = std.testing.allocator;
+    var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
+    defer arena.deinit();
+    const allocator = arena.allocator();
+
     var builder = InputSchemaBuilder.init(allocator);
     defer builder.deinit();
 

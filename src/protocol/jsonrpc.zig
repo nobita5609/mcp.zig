@@ -127,14 +127,31 @@ pub const ParseError = error{
     OutOfMemory,
 };
 
+/// Result of parsing a message, keeping the arena alive.
+pub const ParsedMessage = struct {
+    message: Message,
+    parsed: std.json.Parsed(std.json.Value),
+
+    pub fn deinit(self: ParsedMessage) void {
+        self.parsed.deinit();
+    }
+};
+
 /// Parses a JSON-RPC message from a JSON string.
-pub fn parseMessage(allocator: std.mem.Allocator, json_str: []const u8) ParseError!Message {
+pub fn parseMessage(allocator: std.mem.Allocator, json_str: []const u8) ParseError!ParsedMessage {
     const parsed = std.json.parseFromSlice(std.json.Value, allocator, json_str, .{}) catch {
         return ParseError.InvalidJson;
     };
-    defer parsed.deinit();
+    errdefer parsed.deinit();
 
-    return parseFromValue(parsed.value);
+    const message = parseFromValue(parsed.value) catch |err| {
+        return err;
+    };
+
+    return ParsedMessage{
+        .message = message,
+        .parsed = parsed,
+    };
 }
 
 /// Parses a JSON-RPC message from a parsed JSON value.
@@ -444,8 +461,9 @@ test "parse request" {
     const json = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"test\"}";
 
     const result = try parseMessage(allocator, json);
-    try std.testing.expect(result == .request);
-    try std.testing.expectEqualStrings("test", result.request.method);
+    defer result.deinit();
+    try std.testing.expect(result.message == .request);
+    try std.testing.expectEqualStrings("test", result.message.request.method);
 }
 
 test "parse notification" {
@@ -453,8 +471,9 @@ test "parse notification" {
     const json = "{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\"}";
 
     const result = try parseMessage(allocator, json);
-    try std.testing.expect(result == .notification);
-    try std.testing.expectEqualStrings("notifications/initialized", result.notification.method);
+    defer result.deinit();
+    try std.testing.expect(result.message == .notification);
+    try std.testing.expectEqualStrings("notifications/initialized", result.message.notification.method);
 }
 
 test "serialize request" {
