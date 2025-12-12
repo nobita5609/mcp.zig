@@ -54,12 +54,23 @@ export default defineConfig({
           text: 'Introduction',
           items: [
             { text: 'What is MCP?', link: '/guide/what-is-mcp' },
+            { text: 'Architecture', link: '/guide/architecture' },
+            { text: 'Protocol Version', link: '/guide/protocol-version' },
             { text: 'Getting Started', link: '/guide/getting-started' },
             { text: 'Installation', link: '/guide/installation' }
           ]
         },
         {
-          text: 'Core Concepts',
+          text: 'MCP Concepts',
+          items: [
+            { text: 'Server Concepts', link: '/guide/server-concepts' },
+            { text: 'Client Concepts', link: '/guide/client-concepts' },
+            { text: 'Authorization', link: '/guide/authorization' },
+            { text: 'Inspector', link: '/guide/inspector' }
+          ]
+        },
+        {
+          text: 'Zig API',
           items: [
             { text: 'Server', link: '/guide/server' },
             { text: 'Client', link: '/guide/client' },

@@ -6,7 +6,7 @@ hero:
   text: Model Context Protocol for Zig
   tagline: Bringing MCP support to the Zig ecosystem — the first comprehensive MCP library for Zig
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: mcp.zig
   actions:
     - theme: brand

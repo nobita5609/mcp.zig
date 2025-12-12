@@ -51,8 +51,10 @@ try server.run(.stdio);
 For remote access:
 
 ```zig
-try server.run(.{ .http = .{ .port = 8080 } });
+try server.run(.{ .http = .{ .host = "127.0.0.1", .port = 8080 } });
 ```
+
+The server will log the listening address to stderr (e.g., `Server listening on http://127.0.0.1:8080`).
 
 ## Registering Components
 

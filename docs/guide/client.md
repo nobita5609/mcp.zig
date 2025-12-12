@@ -36,7 +36,11 @@ try client.connectStdio("path/to/server", &.{});
 ### HTTP Transport
 
 ```zig
+// Connect to localhost on port 8080
 try client.connectHttp("http://localhost:8080");
+
+// Connect to a custom host and port
+try client.connectHttp("http://192.168.1.50:9000");
 ```
 
 ## Capabilities
