@@ -172,8 +172,7 @@ pub const Server = struct {
                 const url = try std.fmt.allocPrint(self.allocator, "http://{s}:{d}", .{ config.host, config.port });
                 defer self.allocator.free(url);
 
-                const stderr = std.io.getStdErr().writer();
-                stderr.print("Server listening on {s}\n", .{url}) catch {};
+                std.log.info("Server listening on {s}", .{url});
 
                 const http = try self.allocator.create(transport_mod.HttpTransport);
                 http.* = try transport_mod.HttpTransport.init(self.allocator, url);

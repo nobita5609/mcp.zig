@@ -72,8 +72,7 @@ pub const Logger = struct {
         if (@intFromEnum(level) > @intFromEnum(self.config.level)) return;
 
         if (self.config.stderr) {
-            const stderr = std.io.getStdErr().writer();
-            stderr.print("[{s}] {s}\n", .{ level.toString(), message }) catch {};
+            std.debug.print("[{s}] {s}\n", .{ level.toString(), message });
         }
     }
 };
